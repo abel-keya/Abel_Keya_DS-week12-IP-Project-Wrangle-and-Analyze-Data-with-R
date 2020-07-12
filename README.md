@@ -59,11 +59,11 @@ The dataset wrangled was obtained from the tweet archive of Twitter user @dog_ra
 
 <p align="center">
    
-   # Technologies used:
+   # R Packages used:
    
  <p align="center"> 
    
-  <img   src="https://github.com/abel-keya/week8_IP_Abel_Keya_Nairobi-Hospital-conducted-a-clinical-camp-to-test-for-hypothyroidism/blob/master/tech3.jpg" width="550" height="300"  alt="DS" title="Requirements" />
+  <img   src="rPackages2.jpg" width="550" height="300"  alt="DS" title="Requirements" />
  
 </p>
 
