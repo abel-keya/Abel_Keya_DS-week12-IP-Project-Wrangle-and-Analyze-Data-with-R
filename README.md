@@ -1,5 +1,5 @@
 # Data-Wrangling-with-R
-# DSw week12 IP Project-Wrangle-and-Analyze-Data
+# DS week12 IP Project-Wrangle-and-Analyze-Data
 
 # Problem Statement:
 
