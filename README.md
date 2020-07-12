@@ -12,7 +12,7 @@
 This project involves the data wrangling work for Data using R programming language.
 
     
-[Dataset1](https://github.com/abel-keya/Data-Wrangling-with-R/blob/master/advertising.csv)
+[Dataset](https://github.com/abel-keya/Data-Wrangling-with-R/blob/master/advertising.csv)
 
 
 
@@ -56,7 +56,7 @@ A Kenyan entrepreneur has created an online cryptography course and would want t
    
  <p align="center"> 
    
-  <img   src="R packages.jpg" width="550" height="300"  alt="DS" title="Requirements" />
+  <img   src="R packages.jpg" width="350" height="200"  alt="DS" title="Requirements" />
  
 </p>
 
