@@ -23,9 +23,13 @@ This project involves the data wrangling work for Data using R programming langu
 In this project it is required to:
 
 (i)     Define the question, the metric for success, the context, experimental design taken and the appropriateness of the available data to answer the given question.
+
 (ii)    Find and deal with outliers, anomalies, and missing data within the dataset.
+
 (iii)   Perform  univariate and bivariate analysis.
+
 (iv)    From your insights provide a conclusion and recommendation.
+
 NB: Your final deliverable will be either an markdown document,  which will comprise the above sections;
 
 The master dataset is analyzed using R data science language in the R Notebook 
