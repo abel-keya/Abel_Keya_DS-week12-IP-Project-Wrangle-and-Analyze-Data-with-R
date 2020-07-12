@@ -63,7 +63,7 @@ The dataset wrangled was obtained from the tweet archive of Twitter user @dog_ra
    
  <p align="center"> 
    
-  <img   src="rPackages2.jpg" width="550" height="300"  alt="DS" title="Requirements" />
+  <img   src="R packages.jpg" width="550" height="300"  alt="DS" title="Requirements" />
  
 </p>
 
