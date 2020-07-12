@@ -56,9 +56,9 @@ A Kenyan entrepreneur has created an online cryptography course and would want t
    
  <p align="center"> 
    
-  <img   src="R packages.jpg" width="350" height="200"  alt="DS" title="Requirements" />
+  <img   src="R packages.jpg" width="650" height="200"  alt="DS" title="Requirements" />
   
-  <img   src="Rpackages.jpg" width="650" height="200"  alt="DS3" title="Requirements" />
+  <img   src="Rpackages.jpg" width="850" height="200"  alt="DS3" title="Requirements" />
  
 </p>
 
