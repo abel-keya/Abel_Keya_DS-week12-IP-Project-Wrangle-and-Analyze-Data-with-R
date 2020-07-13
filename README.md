@@ -1,10 +1,10 @@
 # DS week12 IP Project-Wrangle-and-Analyze-Data with-R
 
 # Problem Statement:
+perform data analysis in R programming language to identify which individuals are most likely to click on ads.
 
 
-
-<img src="https://github.com/abel-keya/Project-Wrangle-and-Analyze-Data/blob/master/data_wrangler.png" width="300" width="550"><img src="https://github.com/abel-keya/Project-Wrangle-and-Analyze-Data/blob/master/pap.gif" width="550">
+<img src="https://github.com/abel-keya/Project-Wrangle-and-Analyze-Data/blob/master/data_wrangler.png" width="200" width="550"><img src="https://github.com/abel-keya/Project-Wrangle-and-Analyze-Data/blob/master/pap.gif" width="550">
 
 
 ## Data sources
