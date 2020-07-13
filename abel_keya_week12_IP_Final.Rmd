@@ -1,0 +1,613 @@
+---
+title: "abel_keya_week12_IP_Final"
+author: "Abel Keya"
+date: "July 13, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+#R PROGRAMMING BASICS: EXPLOLATORY DATA ANALYSIS
+##1. Defining the Question
+To perform explororatory data analysis on a dataset using R programming language.
+a) Specifying the Question
+-Load a dataset
+-preprocess the data
+-find missing values
+-find duplicates
+-find outliers
+-clean data
+-perform Univariate Graphical Exploratory Data Analysis
+-perform Bivariate and Multivariate Graphical Data Analysis.
+
+b)The metric for success 
+-clean dataset
+-perform Univariate Graphical Exploratory Data Analysis
+-perform Bivariate and Multivariate Graphical Data Analysis.
+c)The context
+A Kenyan entrepreneur has created an online cryptography course and would want to advertise it on her blog. She currently targets audiences originating from various countries. In the past, she ran ads to advertise a related course on the same blog and collected data in the process. She would now like to employ your services as a Data Science Consultant to help her identify which individuals are most likely to click on her ads.
+d)experimental design taken 
+Find and deal with outliers, anomalies, and missing data within the dataset.
+Perform  univariate and bivariate analysis.
+From your insights provide a conclusion and recommendation.
+e) Data Relevance
+The provided data was appropriate for the classification analysis that was needed.
+
+```{r}
+# Save the commands used during the session
+savehistory(file="mylog.Rhistory")
+```
+#2. Reading the Data
+```{r}
+# Install the following packages:
+#install.packages("foreign")
+#library(foreign)
+#install.packages("car")
+#install.packages("Hmisc")
+#install.packages("reshape")
+```
+
+
+```{r include=FALSE}
+library(dplyr)
+```
+
+```{r}
+advertising <- read.csv(file = 'advertising.csv')
+```
+3. Checking the Data
+```{r}
+# Previewing the dataset
+# ---
+# 
+head(advertising)
+
+```
+
+```{r}
+head(advertising, n=10)# First 10 rows of dataset
+```
+
+```{r}
+head(advertising, n= -10) # All rows but the last 10
+```
+
+```{r}
+tail(advertising) # Last 6 rows
+```
+
+```{r}
+tail(advertising, n=10) # Last 10 rows
+```
+
+```{r}
+tail(advertising, n= -10) # All rows but the first 10
+```
+
+```{r}
+advertising[1:10, ] # First 10 rows
+```
+
+```{r}
+advertising[1:10,1:3] # First 10 rows of data of the first 3 variables
+```
+
+```{r}
+summary(advertising) # Provides basic descriptive statistics and frequencies.
+
+```
+
+```{r}
+edit(advertising) # Open data editor
+```
+
+```{r}
+str(advertising) # Provides the structure of the dataset
+```
+
+```{r}
+names(advertising) # Lists variables in the dataset
+```
+#4. Tidying the Dataset
+```{r}
+rowSums(is.na(advertising)) # Number of missing per row
+```
+
+```{r}
+colSums(is.na(advertising)) # Number of missing per column/variable
+```
+### FINDING DUPLICATES
+```{r}
+# check dimensions
+dim(advertising)
+```
+
+```{r}
+#check unique values
+unique_items <- unique(advertising)
+unique_items
+```
+
+```{r}
+#check duplicates by rows
+duplicated_rows <- df[duplicated(advertising),]
+duplicated_rows
+```
+
+```{r}
+
+```
+
+```{r}
+rowMeans(is.na(advertising))*length(advertising) # No. of missing per row (another way)
+# length = num. of variables/elements in an object
+```
+###FIXING MISSING DATA
+```{r}
+# The function complete.cases() returns a logical vector indicating which cases are complete.
+# list rows of data that have missing values
+advertising[!complete.cases(advertising),]
+```
+#Removing the missing data
+```{r}
+# The function na.omit() returns the object with listwise deletion of missing values.
+# Creating a new dataset without missing data
+advertising <- na.omit(advertising) 
+```
+#Renaming variables
+```{r}
+# Using library –-reshape--
+library(reshape)
+advertising <- rename(advertising, c(Daily.Time.Spent.on.Site="time.spent"))
+advertising <- rename(advertising, c(Ad.Topic.Line="topic"))
+advertising <- rename(advertising, c(Daily.Internet.Usage="Usage"))
+advertising <- rename(advertising, c(Clicked.on.Ad ="Clicked"))
+advertising <- rename(advertising, c(Timestamp="timestamp"))
+advertising <- rename(advertising, c(Area.Income.="income"))
+advertising <- rename(advertising, c(Male.="gender"))
+```
+
+```{r}
+#confirming the dataset
+head(advertising)
+```
+
+```{r}
+#confirm data types per column
+str(advertising)
+```
+converting data types
+```{r}
+#f['set_of_numbers'] = pd.to_numeric(df['set_of_numbers'], errors='coerce')
+print(advertising)
+```
+
+```{r}
+# Type cast the column to date
+advertising$timestamp<- as.Date(advertising$timestamp)
+```
+
+```{r}
+#confirm the date conversion
+str(advertising)
+```
+
+#FEATURE ENGINEERING:FORMATTING TIME/DATE COLUMNS
+```{r}
+install.packages("lubridate")
+install.packages("tidyr")
+library(tidyr)
+library(lubridate)
+advertising_2 <- separate(advertising, timestamp, c("Year", "Month", "Day"))
+head(advertising_2)
+```
+
+```{r}
+head(advertising)
+```
+#OUTLIERS
+```{r}
+names(advertising)
+```
+
+#UNIVARIATE VISUALIZATIONS ANALYSIS
+1.BARPLOTS
+```{r}
+#barplot(table(advertising$Time.Spent))
+```
+
+```{r}
+barplot(table(advertising$Male))
+```
+2.BOXPLOTS
+```{r}
+boxplot.stats(advertising$time.spent)
+```
+
+```{r}
+plot(x = advertising_2$Day, y = advertising$Age)
+     
+```
+COUNTPLOT
+```{r}
+counts <- table(advertising_2$Day)
+  barplot(counts, main="Frequency of Days",  xlab="Number of Days")
+```
+
+```{r}
+counts <- table(advertising_2$Month)
+  barplot(counts, main="Frequency of months",  xlab="Number ofmonths")
+
+```
+
+```{r}
+pairs(~advertising$Area.Income+advertising$Clicked+advertising$time.spent+advertising$Usage, data=advertising, main="scatterplot matrix  for the Advertising")
+```
+
+```{r}
+barplot(table(advertising$Age), horiz=TRUE, main="Barplot")
+boxplot(rt(100, 5), main="Boxplot")
+stripchart(sample(1:20, 10, replace=TRUE), method="stack", main="Stripchart")
+pie(table(sample(1:6, 10, replace=TRUE)), main="Piechart")
+```
+
+```{r}
+screen(1)
+barplot(advertising$Age, main="Barplot")
+screen(2)
+boxplot(sample(1:20, 100, replace=TRUE) ~ gl(4, 25, labels=LETTERS[1:4]),
+        col=rainbow(4), notch=TRUE, main="Boxplot")
+screen(3)
+plot(sample(1:20, 40, replace=TRUE), pch=20, xlab=NA, ylab=NA,
+     main="Scatter plot")
+close.screen(all.screens=TRUE)
+```
+
+#BIVARIATE PLOTS
+
+```{r}
+library("ggplot2")
+ #
+geom_line()
+ggplot(data =advertising_2,aes(x=time.spent,y=Area.Income))+
+  geom_line()
+
+```
+
+```{r}
+install.packages("corrplot")
+```
+#Compute correlation matrix
+```{r}
+# function rcorr() [in Hmisc package] is used to compute the significance levels for pearson and spearman correlations. It returns both the correlation coefficients and the p-value of the correlation for all possible pairs of columns in the data table.
+
+install.packages("Hmisc")
+```
+
+```{r}
+#correlations
+res <- cor(advertising[0:4])
+round(res, 2)
+```
+##CORRELATIONS
+```{r}
+#Correlation matrix with significance levels (p-value)
+library("Hmisc")
+#rcorr(advertising[0:4], type = c("pearson","spearman"))
+```
+
+```{r}
+res2 <- rcorr(as.matrix(advertising[0:4]))
+res2
+```
+Correlation matrix with significance levels (p-value)
+```{r}
+# Extract the correlation coefficients
+res2$r
+# Extract p-values
+res2$P
+
+```
+
+```{r}
+# flattenCorrMatrix
+# cormat : matrix of the correlation coefficients
+# pmat : matrix of the correlation p-values
+flattenCorrMatrix <- function(cormat, pmat) {
+  ut <- upper.tri(cormat)
+  data.frame(
+    row = rownames(cormat)[row(cormat)[ut]],
+    column = rownames(cormat)[col(cormat)[ut]],
+    cor  =(cormat)[ut],
+    p = pmat[ut]
+    )
+}
+```
+
+```{r}
+res2<-rcorr(as.matrix(advertising[,0:4]))
+flattenCorrMatrix(res2$r, res2$P)
+```
+Visualize correlation matrix
+```{r}
+#The R function symnum() replaces correlation coefficients by symbols according to the level of the correlation. It takes the correlation matrix as an argument 
+symnum(res, abbr.colnames = FALSE)
+```
+
+```{r}
+install.packages("corrplot")
+```
+Positive correlations are displayed in blue and negative correlations in red color. Color intensity and the size of the circle are proportional to the correlation coefficients. In the right side of the correlogram, the legend color shows the correlation coefficients and the corresponding colors.
+```{r}
+library(corrplot)
+corrplot(res, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+```
+
+The correlation matrix is reordered according to the correlation coefficient using “hclust” method.
+```{r}
+#combine correlogram with the significance test.
+#use the result res.cor2 generated in the previous section with rcorr() function [in Hmisc package]:
+# Insignificant correlation are crossed
+corrplot(res2$r, type="upper", order="hclust", 
+         p.mat = res2$P, sig.level = 0.01, insig = "blank")
+# Insignificant correlations are leaved blank
+corrplot(res2$r, type="upper", order="hclust", 
+         p.mat = res2$P, sig.level = 0.01, insig = "blank")
+```
+The function chart.Correlation()[ in the package PerformanceAnalytics],is used to display a chart of a correlation matrix.
+```{r}
+install.packages("PerformanceAnalytics")
+```
+
+```{r}
+library("PerformanceAnalytics")
+my_data <- advertising[0:4, c(0,1,2,3,4)]
+chart.Correlation(my_data, histogram=TRUE, pch=19)
+```
+heatmap()
+x : the correlation matrix to be plotted
+col : color palettes
+symm : logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.
+```{r}
+# Get some colors
+col<- colorRampPalette(c("blue", "white", "red"))(20)
+heatmap(x = res, col = col, symm = TRUE)
+```
+
+#ggcorrplot: Visualization of a correlation matrix using ggplot2
+```{r}
+#gcorrplot can be installed from CRAN as follow:
+install.packages("ggcorrplot")
+```
+
+```{r}
+library(ggcorrplot)
+```
+
+```{r}
+
+# Compute a correlation matrix
+data(advertising[0:3])
+corr <- round(cor(advertising[0:3]),1)
+corr
+```
+
+```{r}
+# Compute a matrix of correlation p-values
+p.mat <- cor_pmat(advertising[0:3])
+head(p.mat[, 1:3])
+
+```
+#Correlation matrix visualization
+```{r}
+# Visualize the correlation matrix
+# --------------------------------
+# method = "square" (default)
+ggcorrplot(corr)
+```
+
+```{r}
+# method = "circle"
+ggcorrplot(corr, method = "circle")
+```
+
+```{r}
+# Reordering the correlation matrix
+# --------------------------------
+# using hierarchical clustering
+ggcorrplot(corr, hc.order = TRUE, outline.col = "white")
+```
+
+```{r}
+# Types of correlogram layout
+# --------------------------------
+# Get the lower triangle
+ggcorrplot(corr, hc.order = TRUE, type = "lower",
+     outline.col = "white")
+```
+
+```{r}
+# Get the upeper triangle
+ggcorrplot(corr, hc.order = TRUE, type = "upper",
+     outline.col = "white")
+```
+
+```{r}
+# Change colors and theme
+# --------------------------------
+# Argument colors
+ggcorrplot(corr, hc.order = TRUE, type = "lower",
+   outline.col = "white",
+   ggtheme = ggplot2::theme_gray,
+   colors = c("#6D9EC1", "white", "#E46726"))
+```
+
+```{r}
+# Add correlation coefficients
+# --------------------------------
+# argument lab = TRUE
+ggcorrplot(corr, hc.order = TRUE, type = "lower",
+   lab = TRUE)
+```
+
+```{r}
+# Add correlation significance level
+# --------------------------------
+# Argument p.mat
+ggcorrplot(corr, hc.order = TRUE,
+    type = "lower", p.mat = p.mat)
+```
+
+```{r}
+# Leave blank on no significant coefficient
+ggcorrplot(corr, p.mat = p.mat, hc.order = TRUE,
+    type = "lower", insig = "blank")
+```
+#CATEGORICAL VARIABLE ENCODING
+```{r include=FALSE}
+#library('fastDummies')
+install.packages("dummies")
+
+```
+
+```{r include=FALSE}
+library(dummies)
+advertising.new <- dummy.data.frame(advertising, sep = ".")
+names(advertising.new)
+head(advertising.new)
+```
+#Principal Component Analysis
+```{r}
+#The purpose of principal component analysis is to find the best low-dimensional representation of the variation in a multivariate data set. 
+advertisement<- as.data.frame(scale(advertising.new[1:9]))
+advertisement.pca <- prcomp(advertisement)
+```
+#principal component analysis using the “prcomp()” function in R
+```{r}
+# summary of the principal component analysis results using the “summary()” function on the output of “prcomp()”
+#The standard deviation of the components is stored in a named element called “sdev” of the output variable made by “prcomp”
+summary(advertisement.pca)
+
+```
+
+```{r}
+advertisement.pca$sdev
+```
+
+```{r}
+#The total variance explained by the components is the sum of the variances of the components:
+sum(advertisement.pca$sdev)^2
+```
+ 
+```{r}
+#summarise the results of a principal components analysis by making a scree plot
+screeplot(advertisement.pca, type="lines")
+```
+The change in slope in the scree plot occurs at component, which is the “elbow” of the scree plot. Therefore, based on the scree plot that the first components should before the elbow be retained.
+
+Kaiser’s criterion: only retain principal components for which the variance is above 1 (when principal component analysis was applied to standardised data). I  check this by finding the variance of each of the principal components:
+```{r}
+(advertisement.pca$sdev)^2
+```
+principal components to retain is by minimum amount of the total variance.
+```{r}
+advertisement.pca$rotation[,1]
+```
+Loadings for the Principal Components
+The loadings for the principal components are stored in a named element “rotation” of the variable returned by “prcomp()”. This contains a matrix with the loadings of each principal component, where the first column in the matrix contains the loadings for the first principal component, the second column contains the loadings for the second principal component.
+```{r}
+sum(advertisement.pca$rotation[,1])^2
+```
+
+Scatterplots of the Principal Components
+The values of the principal components are stored in a named element “x” of the variable returned by “prcomp()”. 
+```{r}
+plot(advertisement.pca$x[,1],advertisement.pca$x[,2]) # make a scatterplot
+text(advertisement.pca$x[,1],advertisement.pca$x[,2], advertising$time.spent,cex=0.7, pos=4, col="red") # add labels
+#The scatterplot shows the first principal component on the x-axis, and the second principal component on the y-axis. 
+```
+
+#linear discriminant analysis (LDA) 
+to find the linear combinations of the original variables in our data set.
+```{r include=FALSE}
+#linear discriminant analysis using the “lda()” function from the R “MASS” package. To use this function, install the “MASS” R package
+install.packages("MASS")
+```
+
+```{r}
+names(advertising)
+```
+#LABEL ENCODING:Using CatEncoders package : Encoders for Categorical Variables
+```{r include=FALSE}
+install.packages("CatEncoders")
+
+```
+
+```{r include=FALSE}
+library(CatEncoders)
+```
+
+```{r}
+# Saving names of categorical variables
+factors <- names(which(sapply(advertising, is.factor)))
+# Label Encoder
+#actors<-list(c(advertisement$topic,advertisement$Country,advertisement$City))
+for (i in factors){
+  encode <- LabelEncoder.fit(advertising[, i])
+  advertising[, i] <- transform(encode, advertising[, i])
+}
+advertising
+```
+
+
+```{r}
+# load the MASS package
+library("MASS")                                                
+advertising.lda <- lda(advertising$Clicked ~ advertising$Age + advertising$Area.Income + advertising$Usage+advertising$Male+advertising$time.spent)
+```
+
+```{r}
+advertising.lda
+```
+
+```{r}
+advertising.lda$scaling[,1]
+
+```
+
+```{r}
+advertising.lda.values <- predict(advertising.lda, advertising[2:4])
+advertising.lda.values$x[,1] # values for the first discriminant function, using the unstandardised data
+
+```
+A Stacked Histogram of the LDA Values
+```{r}
+ldahist(data = advertising.lda.values$x[,1], g=advertising$Clicked)
+```
+
+```{r}
+ldahist(data = advertising.lda.values$x[,1], g=advertising$Clicked)
+```
+Scatterplots of the Discriminant Functions
+```{r}
+plot(advertising.lda.values$x[,1]) #advertising.lda.values$x[,2]) # make a scatterplot
+text(advertising.lda.values$x[,1],advertising$Clicked,cex=0.7,pos=4,col="red") #advertising.lda.values$x[,2]add labels
+```
+```{r}
+
+```
+#Conclusuion:
+The dataset was appropriate. it contained no missing values and minimal outliers amongst the varaibles
+Both univariate and Bivariate analysis revealed that the dataset is collinear, hence it can be analysed better by use of a classification algorithms.
+```{r}
+
+```
+
+
+
+
